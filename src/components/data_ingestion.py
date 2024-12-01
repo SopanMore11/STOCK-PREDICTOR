@@ -71,9 +71,9 @@ class DataIngestion:
     
             
 
-if __name__ == "__main__":
-    data_ingestion = DataIngestion()
-    data_ingestion.initiate_data_ingestion()
+# if __name__ == "__main__":
+#     data_ingestion = DataIngestion()
+#     data_ingestion.initiate_data_ingestion()
     # X_train, Y_train, X_val, Y_val, X_test, Y_test = data_ingestion.initiate_data_ingestion()
     # print(f"X_train shape: {X_train.shape}")
     # print(f"X_test shape: {X_test.shape}")

@@ -6,7 +6,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from dataclasses import dataclass
-
+# from src.data_ingestion import DataIngestion, DataIngestionConfig
+from src.components.data_ingestion import DataIngestion, DataIngestionConfig
 
 @dataclass
 class DataTransformationConfig:
@@ -156,10 +157,10 @@ class DataTransformation:
 
         return X_train, Y_train, X_val, Y_val, X_test, Y_test
 
-    def initiate_data_transformation(self):
+    def initiate_data_transformation(self, data_path):
 
         logging.info("Initiated Data Transformation.")
-        df = pd.read_csv(self.trasnformation_config.raw_data_path)
+        df = pd.read_csv(data_path)
         # Encoding the DataFrame
         df_encoded = self.encode_company_name(df=df)
         logging.info("Encodede the DataFrame Successfully")
@@ -191,18 +192,21 @@ class DataTransformation:
         os.makedirs(os.path.dirname(self.trasnformation_config.X_val_data_path), exist_ok=True)
         os.makedirs(os.path.dirname(self.trasnformation_config.Y_val_data_path), exist_ok=True)
 
-        df.to_csv(self.trasnformation_config.X_train_data_path, index=False, header=True)
-        df.to_csv(self.trasnformation_config.Y_train_data_path, index=False, header=True)
-        df.to_csv(self.trasnformation_config.X_test_data_path, index=False, header=True)
-        df.to_csv(self.trasnformation_config.Y_test_data_path, index=False, header=True)
-        df.to_csv(self.trasnformation_config.X_val_data_path, index=False, header=True)
-        df.to_csv(self.trasnformation_config.Y_val_data_path, index=False, header=True)
+        np.save(self.trasnformation_config.X_train_data_path, X_train)
+        np.save(self.trasnformation_config.Y_train_data_path, Y_train)
+        np.save(self.trasnformation_config.X_val_data_path, X_val)
+        np.save(self.trasnformation_config.Y_val_data_path, Y_val)
+        np.save(self.trasnformation_config.X_test_data_path, X_test)
+        np.save(self.trasnformation_config.Y_test_data_path, Y_test)
+
 
 
         logging.info("Data Transformation is Completed.")
 
 
 if __name__ == "__main__":
+    data_ingestion = DataIngestion()
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation()
+    data_path = data_ingestion.initiate_data_ingestion()
+    data_transformation.initiate_data_transformation(data_path=data_path)
     print("Done!")

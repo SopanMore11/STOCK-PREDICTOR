@@ -2,4 +2,6 @@ pandas
 numpy
 seaborn
 scikit-learn
+tensorflow
+pyyaml
 # -e .
